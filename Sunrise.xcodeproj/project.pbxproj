@@ -3,10 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CB151092F16A53A00A6698B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB151082F16A53A00A6698B /* WidgetKit.framework */; };
+		4CB1510B2F16A53A00A6698B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB1510A2F16A53A00A6698B /* SwiftUI.framework */; };
+		4CB1511A2F16A53B00A6698B /* SunriseWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4CB151062F16A53A00A6698B /* SunriseWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4CB151212F16A69600A6698B /* SunriseAlarmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB151202F16A69600A6698B /* SunriseAlarmData.swift */; };
+		4CB151222F16A69600A6698B /* SunriseAlarmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB151202F16A69600A6698B /* SunriseAlarmData.swift */; };
+		4CB151242F16A6B800A6698B /* AlarmKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB151232F16A6B800A6698B /* AlarmKitManager.swift */; };
 		AA0001 /* SunriseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000 /* SunriseApp.swift */; };
 		AA0003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0002 /* ContentView.swift */; };
 		AA0005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA0004 /* Assets.xcassets */; };
@@ -22,7 +28,36 @@
 		AA001B /* alarm.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA001A /* alarm.caf */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4CB151182F16A53B00A6698B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AAFFF5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CB151052F16A53A00A6698B;
+			remoteInfo = SunriseWidgetExtensionExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4CB1511B2F16A53B00A6698B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4CB1511A2F16A53B00A6698B /* SunriseWidgetExtensionExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4CB151062F16A53A00A6698B /* SunriseWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SunriseWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CB151082F16A53A00A6698B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		4CB1510A2F16A53A00A6698B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		4CB151202F16A69600A6698B /* SunriseAlarmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunriseAlarmData.swift; sourceTree = "<group>"; };
+		4CB151232F16A6B800A6698B /* AlarmKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmKitManager.swift; sourceTree = "<group>"; };
 		AA0000 /* SunriseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunriseApp.swift; sourceTree = "<group>"; };
 		AA0002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AA0004 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -40,7 +75,30 @@
 		AAFFFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4CB1511E2F16A53B00A6698B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4CB151052F16A53A00A6698B /* SunriseWidgetExtensionExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4CB1510C2F16A53A00A6698B /* SunriseWidgetExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4CB1511E2F16A53B00A6698B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = SunriseWidgetExtension; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		4CB151032F16A53A00A6698B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CB1510B2F16A53A00A6698B /* SwiftUI.framework in Frameworks */,
+				4CB151092F16A53A00A6698B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AAFFFA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -51,9 +109,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4CB151072F16A53A00A6698B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CB151082F16A53A00A6698B /* WidgetKit.framework */,
+				4CB1510A2F16A53A00A6698B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AA0016 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4CB151202F16A69600A6698B /* SunriseAlarmData.swift */,
 				AA0010 /* SavedLocation.swift */,
 			);
 			path = Models;
@@ -72,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				AAFFF9 /* Sunrise */,
+				4CB1510C2F16A53A00A6698B /* SunriseWidgetExtension */,
+				4CB151072F16A53A00A6698B /* Frameworks */,
 				AAFFFB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				AAFFFD /* Sunrise.app */,
+				4CB151062F16A53A00A6698B /* SunriseWidgetExtensionExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,6 +184,7 @@
 		AAFFFF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4CB151232F16A6B800A6698B /* AlarmKitManager.swift */,
 				AA0008 /* LocationManager.swift */,
 				AA000A /* SunriseService.swift */,
 				AA000C /* NotificationManager.swift */,
@@ -123,6 +195,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4CB151052F16A53A00A6698B /* SunriseWidgetExtensionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CB1511F2F16A53B00A6698B /* Build configuration list for PBXNativeTarget "SunriseWidgetExtensionExtension" */;
+			buildPhases = (
+				4CB151022F16A53A00A6698B /* Sources */,
+				4CB151032F16A53A00A6698B /* Frameworks */,
+				4CB151042F16A53A00A6698B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4CB1510C2F16A53A00A6698B /* SunriseWidgetExtension */,
+			);
+			name = SunriseWidgetExtensionExtension;
+			packageProductDependencies = (
+			);
+			productName = SunriseWidgetExtensionExtension;
+			productReference = 4CB151062F16A53A00A6698B /* SunriseWidgetExtensionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AA0020 /* Sunrise */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AAFFF7 /* Build configuration list for PBXNativeTarget "Sunrise" */;
@@ -130,10 +224,12 @@
 				AAFFF8 /* Sources */,
 				AAFFFA /* Frameworks */,
 				AA0021 /* Resources */,
+				4CB1511B2F16A53B00A6698B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4CB151192F16A53B00A6698B /* PBXTargetDependency */,
 			);
 			name = Sunrise;
 			productName = Sunrise;
@@ -147,9 +243,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					4CB151052F16A53A00A6698B = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
 					AA0020 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -169,11 +268,19 @@
 			projectRoot = "";
 			targets = (
 				AA0020 /* Sunrise */,
+				4CB151052F16A53A00A6698B /* SunriseWidgetExtensionExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4CB151042F16A53A00A6698B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA0021 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -187,6 +294,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4CB151022F16A53A00A6698B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CB151222F16A69600A6698B /* SunriseAlarmData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AAFFF8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -194,6 +309,8 @@
 				AA0003 /* ContentView.swift in Sources */,
 				AA0001 /* SunriseApp.swift in Sources */,
 				AA0019 /* Theme.swift in Sources */,
+				4CB151212F16A69600A6698B /* SunriseAlarmData.swift in Sources */,
+				4CB151242F16A6B800A6698B /* AlarmKitManager.swift in Sources */,
 				AA0009 /* LocationManager.swift in Sources */,
 				AA000B /* SunriseService.swift in Sources */,
 				AA000D /* NotificationManager.swift in Sources */,
@@ -206,7 +323,77 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4CB151192F16A53B00A6698B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4CB151052F16A53A00A6698B /* SunriseWidgetExtensionExtension */;
+			targetProxy = 4CB151182F16A53B00A6698B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4CB1511C2F16A53B00A6698B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UY27YB5ZKJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SunriseWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SunriseWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunrise.app.SunriseWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4CB1511D2F16A53B00A6698B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UY27YB5ZKJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SunriseWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SunriseWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunrise.app.SunriseWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AAFFF0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -344,6 +531,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -375,6 +563,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -391,6 +580,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4CB1511F2F16A53B00A6698B /* Build configuration list for PBXNativeTarget "SunriseWidgetExtensionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CB1511C2F16A53B00A6698B /* Debug */,
+				4CB1511D2F16A53B00A6698B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AAFFF6 /* Build configuration list for PBXProject "Sunrise" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

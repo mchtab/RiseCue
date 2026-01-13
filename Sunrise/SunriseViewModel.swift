@@ -2,7 +2,9 @@ import Foundation
 import SwiftUI
 import CoreLocation
 import Combine
+import AlarmKit
 
+@MainActor
 class SunriseViewModel: ObservableObject {
     @Published var sunriseTime: Date?
     @Published var sunsetTime: Date?
@@ -14,21 +16,33 @@ class SunriseViewModel: ObservableObject {
 
     private let locationManager = LocationManager()
     private let sunriseService = SunriseService()
-    private let notificationManager = NotificationManager()
+    private let alarmManager = AlarmKitManager()
     private var cancellables = Set<AnyCancellable>()
 
     var locationStore: LocationStore?
 
     init() {
         setupObservers()
+        setupAlarmObserver()
     }
 
     private func setupObservers() {
-        locationManager.$location.sink { [weak self] location in
-            if let location = location {
-                self?.fetchSunriseForDisplay(latitude: location.latitude, longitude: location.longitude)
-            }
-        }.store(in: &cancellables)
+        locationManager.$location
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] location in
+                if let location = location {
+                    self?.fetchSunriseForDisplay(latitude: location.latitude, longitude: location.longitude)
+                }
+            }.store(in: &cancellables)
+    }
+
+    private func setupAlarmObserver() {
+        // Observe alarm manager state changes
+        alarmManager.$currentAlarm
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] alarm in
+                self?.alarmEnabled = alarm != nil
+            }.store(in: &cancellables)
     }
 
     func getCurrentLocation(completion: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
@@ -43,11 +57,17 @@ class SunriseViewModel: ObservableObject {
     func requestPermissions() {
         locationManager.requestPermission()
 
-        notificationManager.requestAuthorization { granted in
+        Task {
+            let granted = await alarmManager.requestAuthorization()
             if granted {
-                print("Notification permission granted")
+                print("AlarmKit permission granted")
             }
         }
+    }
+
+    /// Check if AlarmKit is authorized
+    var isAlarmAuthorized: Bool {
+        alarmManager.isAuthorized
     }
 
     // MARK: - Fetch Sunrise for Display (without scheduling alarm)
@@ -100,11 +120,11 @@ class SunriseViewModel: ObservableObject {
             sunriseService.fetchTomorrowSunriseTime(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude) { [weak self] result in
                 guard let self = self else { return }
 
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     switch result {
                     case .success(let sunrise):
                         self.sunriseTime = sunrise
-                        self.scheduleAlarm(for: sunrise)
+                        await self.scheduleAlarm(for: sunrise)
                     case .failure(let error):
                         self.isLoading = false
                         self.errorMessage = "Failed to fetch sunrise time: \(error.localizedDescription)"
@@ -114,11 +134,13 @@ class SunriseViewModel: ObservableObject {
             return
         }
 
-        scheduleAlarm(for: sunrise)
+        Task {
+            await scheduleAlarm(for: sunrise)
+        }
     }
 
-    private func scheduleAlarm(for sunrise: Date) {
-        guard let locationStore = locationStore else {
+    private func scheduleAlarm(for sunrise: Date) async {
+        guard let locationStore = locationStore, let selectedLocation = locationStore.selectedLocation else {
             isLoading = false
             errorMessage = "Location store not initialized"
             return
@@ -132,17 +154,26 @@ class SunriseViewModel: ObservableObject {
         }
 
         self.alarmTime = alarmDate
+        let isBefore = locationStore.alarmTiming == .before
+        let locationName = selectedLocation.name
 
-        notificationManager.scheduleDailyAlarm(at: alarmDate, isBefore: locationStore.alarmTiming == .before) { [weak self] success in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                if success {
-                    self?.alarmEnabled = true
-                    self?.errorMessage = nil
-                } else {
-                    self?.errorMessage = "Failed to schedule alarm"
-                }
+        do {
+            let success = try await alarmManager.scheduleAlarm(
+                at: alarmDate,
+                isBefore: isBefore,
+                locationName: locationName
+            )
+
+            isLoading = false
+            if success {
+                alarmEnabled = true
+                errorMessage = nil
+            } else {
+                errorMessage = "Failed to schedule alarm"
             }
+        } catch {
+            isLoading = false
+            errorMessage = "Failed to schedule alarm: \(error.localizedDescription)"
         }
     }
 
@@ -156,8 +187,52 @@ class SunriseViewModel: ObservableObject {
     }
 
     func cancelAlarm() {
-        notificationManager.cancelAllAlarms()
-        alarmEnabled = false
-        alarmTime = nil
+        Task {
+            await alarmManager.cancelAlarm()
+            alarmEnabled = false
+            alarmTime = nil
+        }
+    }
+
+    // MARK: - Test Alarm
+
+    /// Schedule a test alarm that fires in a few seconds (for testing)
+    func scheduleTestAlarm(delaySeconds: TimeInterval = 10) {
+        let testFireDate = Date().addingTimeInterval(delaySeconds)
+        let locationName = locationStore?.selectedLocation?.name ?? "Test Location"
+
+        Task {
+            // First ensure we have authorization
+            let authorized = await alarmManager.requestAuthorization()
+            print("AlarmKit authorized: \(authorized)")
+
+            guard authorized else {
+                errorMessage = "AlarmKit not authorized. Please enable in Settings."
+                print("AlarmKit authorization denied")
+                return
+            }
+
+            do {
+                print("Scheduling test alarm for: \(testFireDate)")
+                let success = try await alarmManager.scheduleAlarm(
+                    at: testFireDate,
+                    isBefore: false,
+                    locationName: locationName
+                )
+
+                if success {
+                    alarmTime = testFireDate
+                    alarmEnabled = true
+                    errorMessage = nil
+                    print("Test alarm scheduled successfully for \(testFireDate)")
+                } else {
+                    errorMessage = "Failed to schedule test alarm"
+                    print("scheduleAlarm returned false")
+                }
+            } catch {
+                errorMessage = "Test alarm error: \(error.localizedDescription)"
+                print("Test alarm error: \(error)")
+            }
+        }
     }
 }

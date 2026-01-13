@@ -1,5 +1,5 @@
 import SwiftUI
-import UserNotifications
+import AlarmKit
 import BackgroundTasks
 
 @main
@@ -21,23 +21,29 @@ struct SunriseApp: App {
             ContentView()
                 .environmentObject(viewModel)
                 .environmentObject(locationStore)
+                .task {
+                    // Request AlarmKit authorization on launch
+                    await requestAlarmAuthorization()
+                }
+        }
+    }
+
+    private func requestAlarmAuthorization() async {
+        let manager = AlarmManager.shared
+        if manager.authorizationState == .notDetermined {
+            do {
+                let state = try await manager.requestAuthorization()
+                print("AlarmKit authorization: \(state)")
+            } catch {
+                print("AlarmKit authorization error: \(error)")
+            }
         }
     }
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                print("Notification permission granted")
-            } else if let error = error {
-                print("Error requesting notification permission: \(error)")
-            }
-        }
-
         registerBackgroundTasks()
-
         return true
     }
 
@@ -52,7 +58,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         let locationStore = LocationStore()
         let sunriseService = SunriseService()
-        let notificationManager = NotificationManager()
 
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
@@ -63,16 +68,28 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             return
         }
 
-        sunriseService.fetchSunriseTime(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude) { result in
-            switch result {
-            case .success(let sunriseDate):
-                let minuteOffset = locationStore.alarmTiming == .before ? -10 : 10
-                let alarmDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: sunriseDate)!
-                notificationManager.scheduleDailyAlarm(at: alarmDate, isBefore: locationStore.alarmTiming == .before) { success in
-                    task.setTaskCompleted(success: success)
+        // Fetch tomorrow's sunrise and reschedule alarm using AlarmKit
+        sunriseService.fetchTomorrowSunriseTime(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude) { result in
+            Task { @MainActor in
+                switch result {
+                case .success(let sunriseDate):
+                    let minuteOffset = locationStore.alarmTiming == .before ? -10 : 10
+                    let alarmDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: sunriseDate)!
+                    let alarmManager = AlarmKitManager()
+                    do {
+                        _ = try await alarmManager.scheduleAlarm(
+                            at: alarmDate,
+                            isBefore: locationStore.alarmTiming == .before,
+                            locationName: selectedLocation.name
+                        )
+                        task.setTaskCompleted(success: true)
+                    } catch {
+                        print("Background alarm scheduling failed: \(error)")
+                        task.setTaskCompleted(success: false)
+                    }
+                case .failure:
+                    task.setTaskCompleted(success: false)
                 }
-            case .failure:
-                task.setTaskCompleted(success: false)
             }
         }
     }

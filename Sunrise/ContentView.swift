@@ -336,6 +336,16 @@ struct ContentView: View {
                 }
                 .buttonStyle(SoftButtonStyle(isPrimary: true))
 
+                // Test alarm button
+                Button(action: { viewModel.scheduleTestAlarm(delaySeconds: 10) }) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "bell.and.waves.left.and.right")
+                            .font(.system(size: 16))
+                        Text("Test Alarm (10s)")
+                    }
+                }
+                .buttonStyle(SoftButtonStyle(isPrimary: false))
+
             } else {
                 // Alarm is set - show status and cancel option
                 alarmStatusBadge
