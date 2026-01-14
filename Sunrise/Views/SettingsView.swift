@@ -360,6 +360,23 @@ struct SettingsView: View {
                 .dawnBody()
                 .lineSpacing(6)
 
+            // API Attribution
+            Link(destination: URL(string: "https://sunrise-sunset.org")!) {
+                HStack(spacing: 8) {
+                    Image(systemName: "sun.horizon")
+                        .font(.system(size: 12))
+                        .foregroundColor(natureColor)
+
+                    Text("Sun times by sunrise-sunset.org")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(natureColor)
+
+                    Image(systemName: "arrow.up.right")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(natureColor.opacity(0.6))
+                }
+            }
+
             HStack(spacing: 8) {
                 Image(systemName: "heart.fill")
                     .font(.system(size: 12))
