@@ -30,7 +30,6 @@ Sunrise is a SwiftUI iOS app that wakes users with the sunrise. It features a ca
 
 - `LocationManager.swift` - CoreLocation wrapper
 - `SunriseService.swift` - Fetches from sunrise-sunset.org API, returns `SunTimes` struct
-- `NotificationManager.swift` - Local notification scheduling (legacy)
 - `AlarmKitManager.swift` - AlarmKit wrapper for system-level alarms
 
 ## Design System (Theme.swift)
@@ -157,10 +156,6 @@ Uses [sunrise-sunset.org/api](https://sunrise-sunset.org/api):
 - `AlarmKitManager` handles authorization, scheduling, and cancellation
 - Alarms fire even when app is terminated
 - Background task (`BGAppRefreshTask`) reschedules daily
-
-### Alarm Sound
-
-Custom alarm sound at `alarm.caf` (converted from MP3, under 30 seconds for iOS limit).
 
 ## Build Requirements
 
